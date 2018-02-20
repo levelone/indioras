@@ -1,0 +1,24 @@
+%h2
+  Sign up Form
+
+%div
+  = form_for(:user, url: signup_path(@user), method: :post) do |f|
+    - if @user.errors.any?
+      %ul
+        - @user.errors.full_messages.uniq.each do |msg|
+          %li= msg
+
+    %div
+      = f.label :name
+      = f.text_field :name   
+    %div
+      = f.label :email
+      = f.text_field :email       
+    %div
+      = f.label :password
+      = f.password_field :password
+    %div
+      = f.label :password_confirmation
+      = f.password_field :password_confirmation
+    %div
+      = f.submit

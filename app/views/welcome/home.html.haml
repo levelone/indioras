@@ -1,0 +1,23 @@
+%h1
+  Welcome Home!
+
+- if current_user.present?
+  = "Greetings, #{current_user.name}!"
+  = link_to 'New Team', new_team_path
+  = link_to 'Logout', logout_path
+- else
+  = link_to 'Login', login_path
+  = link_to 'Sign Up', signup_path
+
+  %h2
+    All Users
+
+  %table
+    %th id
+    %th name
+    %th email
+    - @users.each do |user|
+      %tr
+        %td= user.id
+        %td= user.name
+        %td= user.email
