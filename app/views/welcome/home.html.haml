@@ -5,19 +5,12 @@
   = "Greetings, #{current_user.name}!"
   = link_to 'New Team', new_team_path
   = link_to 'Logout', logout_path
+
+  %ul
+    Teams
+    - current_user.teams.each do |team|
+      %li= link_to team.name, team_path(team)
+
 - else
   = link_to 'Login', login_path
   = link_to 'Sign Up', signup_path
-
-  %h2
-    All Users
-
-  %table
-    %th id
-    %th name
-    %th email
-    - @users.each do |user|
-      %tr
-        %td= user.id
-        %td= user.name
-        %td= user.email

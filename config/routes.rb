@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   post '/signup' => 'users#create'
 
   resources :teams
+  resources :projects
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

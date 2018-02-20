@@ -1,0 +1,10 @@
+%h2
+  = "#{@team.name} – Team Page"
+
+= link_to 'Back', root_path
+= link_to 'New Project', new_project_path(team_id: @team.id)
+
+%ul
+  Projects
+  - @team.projects.each do |project|
+    %li= link_to project.name, project_path(project)
