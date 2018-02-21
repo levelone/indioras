@@ -25,6 +25,11 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def show
+    @team = Team.find(params[:team_id])
+    @project = Project.find(params[:id])
+  end
+
   private
 
   def project_params

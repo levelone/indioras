@@ -4,7 +4,6 @@ class WelcomeController < ApplicationController
   protect_from_forgery with: :exception
 
   def home
-    # paginate list of users
-    @users = User.all
+    @teams = Team.all
   end
 end

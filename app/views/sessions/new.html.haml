@@ -1,5 +1,7 @@
 %h1 Login Form
 
+= link_to 'Back', root_path
+
 = form_for(:user, url: login_path, method: :post) do |f|
   %div
     = f.label :email

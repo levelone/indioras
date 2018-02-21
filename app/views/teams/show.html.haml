@@ -1,10 +1,19 @@
+:css
+  th, td { border: 1px solid black; }
+
 %h2
-  = "#{@team.name} – Team Page"
+  = "/ #{@team.name}"
 
+- if current_user.present?
+  = link_to 'New Project', new_team_project_path(@team)
 = link_to 'Back', root_path
-= link_to 'New Project', new_project_path(team_id: @team.id)
 
-%ul
-  Projects
+%table
+  %th Project Title
+  %th Time Required
+  %th Total Tasks
   - @team.projects.each do |project|
-    %li= link_to project.name, project_path(project)
+    %tr
+      %td= link_to project.name, team_project_path(@team, project)
+      %td= Time.at(project.duration_sum).utc.strftime("%H:%M:%S")
+      %td= project.tasks.count

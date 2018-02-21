@@ -14,3 +14,10 @@
 - else
   = link_to 'Login', login_path
   = link_to 'Sign Up', signup_path
+
+  %ul
+    Public Teams
+    - @teams.each do |team|
+      %li
+        = link_to(team.name, team_path(team))
+        = "by #{team.owner.email}"

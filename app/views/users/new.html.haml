@@ -1,6 +1,8 @@
 %h2
   Sign up Form
 
+= link_to 'Back', root_path
+
 %div
   = form_for(:user, url: signup_path(@user), method: :post) do |f|
     - if @user.errors.any?

@@ -1,0 +1,25 @@
+%h2
+  = "#{@team.name} / #{@project.name} / New Task"
+
+%div
+  = form_for(:task, url: team_project_tasks_path(@team, @project, @task), method: :post) do |f|
+    - if @task.errors.any?
+      %ul
+        - @task.errors.full_messages.uniq.each do |msg|
+          %li= msg
+
+    %div
+      = hidden_field_tag :team_id, params[:team_id]
+      = hidden_field_tag :project_id, params[:project_id]
+
+    %div
+      = f.label :title
+      = f.text_field :title
+    %div
+      = f.label :description
+      = f.text_area :description
+    %div
+      = f.label :duration
+      = f.text_field :duration
+    %div
+      = f.submit 'Submit'
