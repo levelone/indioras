@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
   <title>Indioras</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -8,7 +8,25 @@
 </head>
 <body>
 
-<%= yield %>
+  <div class='navigation-bar'>
+    <% if current_user.present? %>
+      <%= "Welcome, #{current_user.username}!" %>
+    <% end %>
+
+
+    <% if current_user.present? %>
+      <a href=<%= root_path %>>Dashboard</a>
+      <a href=<%= teams_path %>>Teams</a>
+      <a href=<%= logout_path %>>Logout</a>
+    <% else %>
+      <a href=<%= login_path %>>Login</a>
+      <a href=<%= signup_path %>>Sign Up</a>
+    <% end %>
+  </div>
+
+  <div class='margin'>
+    <%= yield %>
+  </div>
 
 </body>
 </html>

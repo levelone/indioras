@@ -17,10 +17,12 @@ ActiveRecord::Schema.define(version: 20180220065928) do
   enable_extension "plpgsql"
 
   create_table "projects", force: :cascade do |t|
-    t.integer "team_id"
-    t.integer "owner_id"
-    t.string  "name"
-    t.string  "description"
+    t.integer  "team_id"
+    t.integer  "owner_id"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "projects_teams", id: false, force: :cascade do |t|
@@ -30,20 +32,24 @@ ActiveRecord::Schema.define(version: 20180220065928) do
 
   create_table "tasks", force: :cascade do |t|
     t.integer  "project_id"
+    t.integer  "owner_id"
+    t.integer  "assignee_id"
     t.string   "title"
     t.string   "description"
-    t.string   "status"
+    t.string   "status",      null: false
     t.integer  "duration"
     t.date     "start_date"
     t.date     "end_date"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "teams", force: :cascade do |t|
-    t.integer "owner_id"
-    t.string  "name"
-    t.string  "description"
+    t.integer  "owner_id"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "teams_users", id: false, force: :cascade do |t|
@@ -52,9 +58,11 @@ ActiveRecord::Schema.define(version: 20180220065928) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "email"
-    t.string "name"
-    t.string "password_digest"
+    t.string   "username"
+    t.string   "email"
+    t.string   "password_digest"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

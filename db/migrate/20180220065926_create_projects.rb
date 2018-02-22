@@ -5,6 +5,8 @@ class CreateProjects < ActiveRecord::Migration
       t.integer :owner_id
       t.string :name
       t.string :description
+
+      t.timestamps
     end
   end
 end
