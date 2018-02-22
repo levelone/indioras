@@ -13,8 +13,14 @@ Rails.application.routes.draw do
   post '/signup' => 'users#create'
 
   resources :teams do
+    put :collaborate, on: :member
+    put :stop_collaboration, on: :member
+
     resources :projects do
-      resources :tasks
+      resources :tasks do
+        put :assign, on: :member
+        put :unassign, on: :member
+      end
     end
   end
 

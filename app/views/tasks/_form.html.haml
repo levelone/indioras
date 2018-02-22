@@ -1,0 +1,52 @@
+:javascript
+  CONVERT_TO_SECONDS = {
+    'days': (24*60*60),   // seconds in 1 day
+    'hours': (60*60),     // seconds in 1 hour
+    'minutes': 60         // seconds in 1 minute
+  }
+
+  function setTimeInSeconds() {
+    durationType = $('.js-task-duration-type').val();
+    durationValue = $('.js-task-duration-value').val() || 0;
+    durationInSeconds = CONVERT_TO_SECONDS[durationType] * durationValue;
+    $duration = $('.js-task-duration');
+    $duration.val(parseInt(durationInSeconds));
+  }
+
+.row
+  = form_for(:task, url: url, method: method) do |f|
+    = hidden_field_tag :_method, method
+    = hidden_field_tag :team_id, params[:team_id]
+    = hidden_field_tag :project_id, params[:project_id]
+    = f.hidden_field :status, value: (@task.status || Task::STATUS[:open])
+    = f.hidden_field :duration, value: 0, class: 'js-task-duration'
+
+    - if @task.errors.any?
+      .alert.alert-danger
+        %ul
+          - @task.errors.full_messages.uniq.each do |msg|
+            %li= msg
+
+    .form-group
+      = f.label :title
+      = f.text_field :title
+    .form-group
+      = f.label :description
+      = f.text_area :description
+    .row
+      .form-group
+        = f.label :duration, 'Estimated Time:'
+        = number_field_tag :duration_value,
+            0,
+            class: 'js-task-duration-value',
+            onchange: 'setTimeInSeconds()'
+      .form-group.margin-top-large.margin-left
+        = select_tag :duration_type,
+            options_for_select(Task::TIME_FORMAT.values),
+            class: 'js-task-duration-type',
+            onchange: 'setTimeInSeconds()'
+
+    .row.flex-left
+      = link_to 'Back', team_project_path(params[:team_id], params[:project_id]), class: 'btn-primary paper-btn'
+      .margin-left
+        = f.submit 'Submit', class: 'paper-btn'

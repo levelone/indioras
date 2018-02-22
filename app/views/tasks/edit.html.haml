@@ -1,0 +1,2 @@
+%h2!= "#{@team.name} / #{@project.name} / #{truncate(@task.title, length: 16)} / Edit"
+= render partial: 'form', locals: { url: team_project_task_path(@team, @project, @task), method: 'put' }

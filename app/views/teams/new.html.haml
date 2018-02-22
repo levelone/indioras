@@ -1,18 +1,20 @@
-%h2
-  New Team
+%h2= '{Team} / New'
 
-%div
+.row
   = form_for(:team, url: teams_path(@team), method: :post) do |f|
     - if @team.errors.any?
-      %ul
-        - @team.errors.full_messages.uniq.each do |msg|
-          %li= msg
+      .alert.alert-danger
+        %ul
+          - @team.errors.full_messages.uniq.each do |msg|
+            %li= msg
 
-    %div
+    .form-group
       = f.label :name
       = f.text_field :name   
-    %div
+    .form-group
       = f.label :description
       = f.text_area :description
-    %div
-      = f.submit 'Submit'
+    .row.flex-left
+      = link_to 'Back', teams_path, class: 'btn-primary paper-btn'
+      .margin-left
+        = f.submit 'Submit', class: 'paper-btn'

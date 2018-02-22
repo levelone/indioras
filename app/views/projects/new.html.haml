@@ -1,21 +1,2 @@
-%h2
-  New Project
-
-%div
-  = form_for(:project, url: projects_path(@project), method: :post) do |f|
-    - if @project.errors.any?
-      %ul
-        - @project.errors.full_messages.uniq.each do |msg|
-          %li= msg
-
-    %div
-      = hidden_field_tag :team_id, params[:team_id]
-
-    %div
-      = f.label :title
-      = f.text_field :name   
-    %div
-      = f.label :description
-      = f.text_area :description
-    %div
-      = f.submit 'Submit'
+%h2= "#{@team.name} / {Projects} / New"
+= render partial: 'form', locals: { url: team_projects_path(@team, @project), method: :post }

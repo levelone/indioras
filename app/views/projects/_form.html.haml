@@ -1,0 +1,22 @@
+.row
+  = form_for(:project, url: url, method: method) do |f|
+    = hidden_field_tag :_method, method
+    = hidden_field_tag :team_id, params[:team_id]
+
+    - if @project.errors.any?
+      .alert.alert-danger
+        %ul
+          - @project.errors.full_messages.uniq.each do |msg|
+            %li= msg
+
+    .form-group
+      = f.label :name
+      = f.text_field :name
+    .form-group
+      = f.label :description
+      = f.text_area :description
+
+    .row.flex-left
+      = link_to 'Back', team_path(params[:team_id]), class: 'btn-primary paper-btn'
+      .margin-left
+        = f.submit 'Submit', class: 'paper-btn'

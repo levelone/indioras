@@ -4,6 +4,14 @@ class WelcomeController < ApplicationController
   protect_from_forgery with: :exception
 
   def home
+    @colors = [
+      'border border-warning',
+      'border border-success',
+      'border border-secondary',
+      'border border-danger',
+      'border border-primary'
+    ]
+
     @teams = Team.all
   end
 end

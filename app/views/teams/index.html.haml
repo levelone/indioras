@@ -1,0 +1,42 @@
+%h2= '{Teams}'
+
+- if @teams.present?
+  %table.table-hover.padding-bottom-large
+    %thead
+      %th #
+      %th Team
+      %th Description
+      %th Projects
+      %th Created By
+      %th Collaborators
+      %th Actions
+    %tbody
+      - @teams.each do |team|
+        %tr
+          %td= team.id
+          %td= link_to team.name, team_path(team)
+          %td= team.description.presence || '–'
+          %td= team.projects.map(&:name).join(', ')
+          %td= team.owner.username
+          %td= team.users.where.not(id: team.owner_id).count
+          %td
+            - if current_user.teams.exclude?(team)
+              = link_to 'Collaborate',
+                collaborate_team_path(team),
+                method: :put
+
+            - elsif current_user.id == team.owner_id
+              = link_to 'Delete',
+                  team_path(team),
+                  method: :delete,
+                  "data-confirm" => "Are you sure?",
+                  "data-method" => "delete"
+
+            - else
+              = link_to 'Stop Collaboration',
+                  stop_collaboration_team_path(team),
+                  method: :put
+
+.row.flex-left
+  = link_to '<', root_path, class: 'paper-btn'
+  = link_to 'Add Team', new_team_path, class: 'margin-left paper-btn'

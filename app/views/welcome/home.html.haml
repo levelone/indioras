@@ -1,23 +1,25 @@
-%h1
-  Welcome Home!
-
 - if current_user.present?
-  = "Greetings, #{current_user.name}!"
-  = link_to 'New Team', new_team_path
-  = link_to 'Logout', logout_path
+  %h2= '{Dashboard}'
 
-  %ul
-    Teams
-    - current_user.teams.each do |team|
-      %li= link_to team.name, team_path(team)
+  %h3= "<span class='badge success'>My Teams</span>".html_safe
+  .row.child-borders
+    - current_user.teams.each do |team, index|
+      %button.btn-large.margin-bottom.margin-right.sm-2.col{ class: @colors.sample }
+        = link_to team.name, team_path(team), class: 'sm-12 col'
+
+  %h3= "<span class='badge secondary'>My Tasks</span>".html_safe
+  .row
+    - current_user.tasks.each do |task|
+      .card.margin-right.margin-bottom{:style => "width: 20rem;"}
+        .card-header= "Task ##{task.id} – #{task.project.team.name}"
+        .card-body
+          %h4.card-title= truncate(task.title, length: 70)
+          %p.card-text.padding-bottom-small= task.description
+          .margin-bottom
+            = link_to 'Visit',
+              team_project_path(task.project.team, task.project),
+              class: 'paper-btn'
 
 - else
-  = link_to 'Login', login_path
-  = link_to 'Sign Up', signup_path
-
-  %ul
-    Public Teams
-    - @teams.each do |team|
-      %li
-        = link_to(team.name, team_path(team))
-        = "by #{team.owner.email}"
+  %h2= '{Login}'
+  = render template: 'sessions/new'

@@ -3,6 +3,10 @@ class TeamsController < ApplicationController
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  def index
+    @teams = Team.all
+  end
+
   def new
     @team = Team.new(owner_id: current_user.id)
   end
@@ -23,7 +27,26 @@ class TeamsController < ApplicationController
   end
 
   def show
-    @team = Team.find(params[:id])
+    @team = Team.find_by_id(params[:id])
+    @projects = @team.projects
+  end
+
+  def destroy
+    @team = Team.find_by_id(params[:id])
+    @team.destroy
+    redirect_to teams_path
+  end
+
+  def collaborate
+    collaborator = TeamsUser.new(user_id: current_user.id, team_id: params[:id])
+    collaborator.save!
+    redirect_to teams_path
+  end
+
+  def stop_collaboration
+    team = Team.find_by_id(params[:id])
+    current_user.teams.destroy(team)
+    redirect_to teams_path
   end
 
   private

@@ -1,26 +1,27 @@
-%h2
-  Sign up Form
+%h2= "{Sign Up}"
 
-= link_to 'Back', root_path
-
-%div
+.row
   = form_for(:user, url: signup_path(@user), method: :post) do |f|
     - if @user.errors.any?
-      %ul
-        - @user.errors.full_messages.uniq.each do |msg|
-          %li= msg
+      .alert.alert-danger
+        %ul
+          - @user.errors.full_messages.uniq.each do |msg|
+            %li= msg
 
-    %div
-      = f.label :name
-      = f.text_field :name   
-    %div
+    .form-group
+      = f.label :username
+      = f.text_field :username
+    .form-group
       = f.label :email
-      = f.text_field :email       
-    %div
+      = f.text_field :email
+    .form-group
       = f.label :password
       = f.password_field :password
-    %div
+    .form-group
       = f.label :password_confirmation
       = f.password_field :password_confirmation
-    %div
-      = f.submit
+
+    .row.flex-left
+      = link_to 'Back', root_path, class: 'btn-primary paper-btn'
+      .margin-left
+        = f.submit 'Submit', class: 'paper-btn'
