@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password
 
   validates :username,
+    uniqueness: true,
     presence: true,
     length: 2..16
 

@@ -29,6 +29,6 @@
                   "data-method" => "delete"
 
 .row.flex-left
-  = link_to '<', root_path, class: 'paper-btn'
+  = link_to '<', teams_path, class: 'paper-btn'
   - if current_user.is_team_owner?(@team) || current_user.is_team_collaborator?(@team)
     = link_to 'New Project', new_team_project_path(@team), class: 'margin-left paper-btn'

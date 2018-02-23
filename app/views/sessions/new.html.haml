@@ -1,5 +1,10 @@
 .row
   = form_for(:user, url: login_path, method: :post) do |f|
+    - if flash[:alert].present?
+      .alert.alert-danger
+        %ul
+          %li= flash[:alert]
+
     .form-group
       = f.label :email
       = f.text_field :email

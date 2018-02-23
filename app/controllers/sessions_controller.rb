@@ -14,7 +14,8 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to root_path
     else
-      render :new
+      flash[:alert] = 'Please check your credentials!'
+      redirect_to root_path
     end
   end
 

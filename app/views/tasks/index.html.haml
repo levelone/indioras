@@ -60,6 +60,6 @@
                   method: :put
 
 .row.flex-left
-  = link_to '<', :back, class: 'paper-btn'
+  = link_to '<', team_path(@team), class: 'paper-btn'
   - if @team.users.find_by_id(current_user.id).present?
     = link_to 'Add Task', new_team_project_task_path(@team, @project), class: 'margin-left paper-btn'

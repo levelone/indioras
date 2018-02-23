@@ -1,13 +1,21 @@
 - if current_user.present?
   %h2= '{Dashboard}'
 
-  %h3= "<span class='badge success'>My Teams</span>".html_safe
+  .row.flex-middle
+    %h3= "<span class='badge success'>My Teams</span>".html_safe
+    %div
+      = link_to '+ Team', new_team_path, class: 'btn-small margin-left paper-btn'
+
   .row.child-borders
     - current_user.teams.each do |team, index|
       %button.btn-large.margin-bottom.margin-right.sm-2.col{ class: @colors.sample }
         = link_to team.name, team_path(team), class: 'sm-12 col'
 
-  %h3= "<span class='badge secondary'>My Tasks</span>".html_safe
+  .row.flex-middle
+    %h3= "<span class='badge secondary'>My Tasks</span>".html_safe
+    %div
+      = link_to '+ Task', root_path, class: 'btn-small margin-left paper-btn'
+
   .row
     - current_user.tasks.each do |task|
       .card.margin-right.margin-bottom{:style => "width: 20rem;"}

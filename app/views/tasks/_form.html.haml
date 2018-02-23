@@ -47,6 +47,6 @@
             onchange: 'setTimeInSeconds()'
 
     .row.flex-left
-      = link_to 'Back', team_project_path(params[:team_id], params[:project_id]), class: 'btn-primary paper-btn'
+      = link_to '<', team_project_path(params[:team_id], params[:project_id]), class: 'paper-btn'
       .margin-left
         = f.submit 'Submit', class: 'paper-btn'
