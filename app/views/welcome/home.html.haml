@@ -1,20 +1,24 @@
 - if current_user.present?
-  %h2= '{Dashboard}'
-
   .row.flex-middle
-    %h3= "<span class='badge success'>My Teams</span>".html_safe
-    %div
-      = link_to '+ Team', new_team_path, class: 'btn-small margin-left paper-btn'
+    %h3
+      %span.badge.success
+        My Team
+    = link_to '+ Add', new_team_path, class: 'margin-left'
 
   .row.child-borders
-    - current_user.teams.each do |team, index|
-      %button.btn-large.margin-bottom.margin-right.sm-2.col{ class: @colors.sample }
-        = link_to team.name, team_path(team), class: 'sm-12 col'
+    - current_user.teams.each_with_index do |team, index|
+      - if index == 0
+        - margin = ''
+      - else
+        - margin = 'margin-left'
+      = link_to team_path(team), class: "border-warning padding-large #{margin}" do
+        %h3{ style: "margin: 0;" }= team.name
 
   .row.flex-middle
-    %h3= "<span class='badge secondary'>My Tasks</span>".html_safe
-    %div
-      = link_to '+ Task', root_path, class: 'btn-small margin-left paper-btn'
+    %h3
+      %span.badge.secondary
+        My Tasks
+    /= link_to '+ Add', root_path, class: 'margin-left'
 
   .row
     - current_user.tasks.each do |task|
@@ -29,5 +33,4 @@
               class: 'paper-btn'
 
 - else
-  %h2= '{Login}'
   = render template: 'sessions/new'

@@ -1,2 +1,2 @@
-%h2= "#{@team.name} / #{@project.name} / {Tasks} / New"
+%h3= "#{@team.name} / #{@project.name} / {Tasks} / New"
 = render partial: 'form', locals: { url: team_project_tasks_path(@team, @project), method: :post }

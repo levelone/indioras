@@ -5,3 +5,12 @@ form {
 .form-group input, textarea {
   width: 100%;
 }
+
+a {
+  background-image: none !important;
+  color: #41403E;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

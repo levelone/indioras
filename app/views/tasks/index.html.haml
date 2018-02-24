@@ -10,7 +10,7 @@
     min-width: 300px;
   }
 
-%h2= "#{@team.name} / #{@project.name} / {Tasks}"
+%h3= "#{@team.name} / #{@project.name} / {Tasks}"
 
 - if @tasks.present?
   %table.table-hover.padding-bottom-large
@@ -42,7 +42,7 @@
           %td= task.owner.username
           %td= task.assignee.present? ? task.assignee.username : '–'
           %td
-            = link_to '| O', edit_team_project_task_path(@team, @project, task)
+            = link_to 'O', edit_team_project_task_path(@team, @project, task)
             - if current_user.is_owner_or_collaborator_of(@team, @project, task)
               = link_to '| X',
                   team_project_task_path(@team, @project, task),
@@ -62,4 +62,6 @@
 .row.flex-left
   = link_to '<', team_path(@team), class: 'paper-btn'
   - if @team.users.find_by_id(current_user.id).present?
-    = link_to 'Add Task', new_team_project_task_path(@team, @project), class: 'margin-left paper-btn'
+    = link_to 'Add Task',
+        new_team_project_task_path(@team, @project),
+        class: 'margin-left paper-btn'

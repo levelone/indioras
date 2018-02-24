@@ -8,12 +8,15 @@
 </head>
 <body>
 
-  <div class='navigation-bar'>
+  <div class='row flex-middle margin'>
     <% if current_user.present? %>
-      <%= "Welcome, #{current_user.username}!" %>
-      <a href=<%= root_path %>>Dashboard</a>
-      <a href=<%= teams_path %>>Teams</a>
-      <a href=<%= logout_path %>>Logout</a>
+      <div class='col col-fill'></div>
+      <h4><%= "@#{current_user.username}" %></h4>
+      <div class='child-borders child-shadows-hover'>
+        <a href=<%= root_path %> class="border margin-bottom margin-left padding">Dashboard</a>
+        <a href=<%= teams_path %> class="border margin-bottom margin-left padding">Teams</a>
+        <a href=<%= logout_path %> class="border margin-bottom margin-left padding">Logout</a>
+      </div>
     <% end %>
   </div>
 
