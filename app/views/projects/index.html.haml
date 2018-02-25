@@ -14,13 +14,19 @@
       - @projects.each do |project|
         %tr
           %td= project.id
-          %td= link_to project.name, team_project_path(@team, project)
+          %td
+            - if current_user.is_team_collaborator?(@team)
+              = link_to project.name, team_project_path(@team, project)
+            - else
+              = project.name
           %td= project.description
           %td= number_to_percentage(project.percentage_of_progress, precision: 2)
           %td= transform_seconds_into_presentable_time(project.tasks.sum_of_duration)
           %td= project.owner.username
           %td
-            - if current_user.is_team_owner?(@team) || (current_user.is_team_collaborator?(@team) && current_user.is_project_owner?(project))
+            - if current_user.is_team_owner?(@team) || |
+                current_user.is_team_collaborator?(@team) && |
+                current_user.is_project_owner?(project) |
               = link_to 'O', edit_team_project_path(@team, project)
               = link_to '| X',
                   team_project_path(@team, project),

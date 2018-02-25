@@ -8,7 +8,9 @@ class Project < ActiveRecord::Base
     length: { maximum: 30 }
 
   def percentage_of_progress
-    time_remaining = tasks.open.sum_of_duration.to_f
+    time_remaining =
+      tasks.open.sum_of_duration.to_f +
+      tasks.in_progress.sum_of_duration.to_f
     time_completed = tasks.closed.sum_of_duration.to_f
     estimated_time = time_remaining + time_completed
     (time_completed / estimated_time * 100).to_f

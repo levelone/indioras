@@ -10,6 +10,27 @@
     min-width: 300px;
   }
 
+:javascript
+  function updateTaskStatus(teamId, projectId, taskId) {
+    taskStatus = $('.js-task-status-' + taskId);
+    url = '/teams/' + teamId + '/projects/' + projectId + '/tasks/' + taskId + '/change_status'
+    data = { task: { status: taskStatus.val().toLowerCase() } };
+    changeStatusRequest = $.ajax({
+      method: 'PUT',
+      url: url,
+      data: data
+    });
+
+    changeStatusRequest.done(function(data) {
+      taskStatus.val(data.task_status);
+    });
+
+    changeStatusRequest.fail(function(jqXHR, message) {
+      console.log('jqXHR:' + jqXHR);
+      console.log('message:' + message);
+    });
+  }
+
 %h3= "#{@team.name} / #{@project.name} / {Tasks}"
 
 - if @tasks.present?
@@ -32,11 +53,20 @@
           %td
             - if task.description.present?
               %p.popover-task-description{ "popover-right" => task.description }
-                = task.title
+                = truncate(task.title, length: 100)
             - else
-              = task.title
+              = truncate(task.title, length: 100)
+
           %td= transform_seconds_into_presentable_time(task.duration)
-          %td= task.status.titleize
+          %td
+            - if current_user == task.assignee
+              = select_tag :status,
+                  options_for_select(Task::STATUS.values.map(&:titleize), selected: task.status.titleize),
+                  class: "js-task-status-#{task.id}",
+                  onchange: "updateTaskStatus(#{@team.id}, #{@project.id}, #{task.id})"
+            - else
+              = task.status.titleize
+
           %td= task.start_date.presence || '–'
           %td= task.end_date.presence || '–'
           %td= task.owner.username
@@ -51,17 +81,11 @@
                   "data-method" => "delete"
           %td
             - if current_user.id == task.assignee_id
-              = link_to 'Unassign Me',
-                  unassign_team_project_task_path(@team, @project, task),
-                  method: :put
+              = link_to 'Unassign Me', unassign_team_project_task_path(@team, @project, task), method: :put
             - else
-              = link_to 'Assign To Me',
-                  assign_team_project_task_path(@team, @project, task),
-                  method: :put
+              = link_to 'Assign To Me', assign_team_project_task_path(@team, @project, task), method: :put
 
 .row.flex-left
   = link_to '<', team_path(@team), class: 'paper-btn'
   - if @team.users.find_by_id(current_user.id).present?
-    = link_to 'Add Task',
-        new_team_project_task_path(@team, @project),
-        class: 'margin-left paper-btn'
+    = link_to 'Add Task', new_team_project_task_path(@team, @project), class: 'margin-left paper-btn'

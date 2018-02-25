@@ -1,19 +1,19 @@
-%h3= '{Login}'
+.col.md-12.text-center
+  %h3= '{Login}'
 
-.row
-  = form_for(:user, url: login_path, method: :post) do |f|
-    - if flash[:alert].present?
-      .alert.alert-danger
-        %ul
-          %li= flash[:alert]
+= form_for(:user, url: login_path, method: :post, class: 'col md-12') do |f|
+  - if flash[:alert].present?
+    .alert.alert-danger
+      %ul
+        %li= flash[:alert]
 
-    .form-group
-      = f.label :email
-      = f.text_field :email
-    .form-group
-      = f.label :password
-      = f.password_field :password
+  .form-group
+    = f.label :email
+    = f.text_field :email
+  .form-group
+    = f.label :password
+    = f.password_field :password
 
-    .row.flex-left
-      = f.submit "Login", class: 'btn-primary paper-btn'
-      = link_to "Sign Up", signup_path, class: 'margin-left paper-btn'
+  .row.flex-left.margin-top-large
+    = f.submit "Login", class: 'col btn-primary margin-right paper-btn'
+    = link_to "Sign Up", signup_path, class: 'col paper-btn text-center'

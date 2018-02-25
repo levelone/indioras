@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       resources :tasks do
         put :assign, on: :member
         put :unassign, on: :member
+        put :change_status, on: :member, defaults: { format: :json }
       end
     end
   end

@@ -77,6 +77,22 @@ class TasksController < ApplicationController
     redirect_to team_project_path(team, project)
   end
 
+  def change_status
+    team = Team.find_by_id(params[:team_id])
+    project = Project.find_by_id(params[:project_id])
+    task = Task.find_by_id(params[:id])
+    task.status = task_params[:status]
+
+    respond_to do |format|
+      if task.valid?
+        task.save!
+        format.json { render json: { task_status: task.status.titleize, message: 'success', status: :ok } }
+      else
+        format.json { render json: { message: 'failed!', status: :bad_request } }
+      end
+    end
+  end
+
   private
 
   def task_params

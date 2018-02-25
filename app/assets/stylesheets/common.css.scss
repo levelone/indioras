@@ -1,16 +1,13 @@
-form {
-  min-width: 350px;
-}
-
-.form-group input, textarea {
-  width: 100%;
-}
-
 a {
   background-image: none !important;
   color: #41403E;
-
-  &:hover {
-    text-decoration: underline;
-  }
 }
+
+table a:hover { text-decoration: underline; }
+form { min-width: 300px; }
+.paper { min-width: 350px; }
+.form-group input, textarea { width: 100%; }
+.underline { text-decoration: underline; }
+.hover-underline:hover { text-decoration: underline; }
+.no-margin { margin: 0 !important; }
+.no-padding { padding: 0 !important; }

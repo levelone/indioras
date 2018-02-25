@@ -25,6 +25,15 @@ class Task < ActiveRecord::Base
   scope :open, -> { where(status: STATUS[:open]) }
   scope :closed, -> { where(status: STATUS[:closed]) }
   scope :in_progress, -> { where(status: STATUS[:in_progress]) }
+  scope :order_by_status, -> {
+    order(
+      "CASE
+        WHEN status='in progress' THEN 1
+        WHEN status='open' THEN 2
+        ELSE 3
+      END, status;"
+    )
+  }
 
   def set_default_status
     status ||= STATUS[:open]

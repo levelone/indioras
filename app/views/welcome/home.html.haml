@@ -2,8 +2,8 @@
   .row.flex-middle
     %h3
       %span.badge.success
-        My Team
-    = link_to '+ Add', new_team_path, class: 'margin-left'
+        My Teams
+    = link_to '+ Add', new_team_path, class: 'margin-left hover-underline'
 
   .row.child-borders
     - current_user.teams.each_with_index do |team, index|
@@ -11,8 +11,8 @@
         - margin = ''
       - else
         - margin = 'margin-left'
-      = link_to team_path(team), class: "border-warning padding-large #{margin}" do
-        %h3{ style: "margin: 0;" }= team.name
+      = link_to team_path(team), class: "background-warning border-warning hover-underline padding-large #{margin}" do
+        %h3.no-margin= team.name
 
   .row.flex-middle
     %h3
@@ -20,15 +20,18 @@
         My Tasks
     /= link_to '+ Add', root_path, class: 'margin-left'
 
-  .row
-    - current_user.tasks.each do |task|
-      .card.margin-right.margin-bottom{:style => "width: 20rem;"}
-        .card-header= "Task ##{task.id} – #{task.project.team.name}"
+  .row.no-margin
+    - current_user.tasks.order_by_status.each do |task|
+      .card.margin-right.margin-bottom{:style => 'width: 20rem;'}
+        .card-header.no-margin.row.flex-middle
+          = truncate(task.project.name, length: 22)
+          .col.col-fill
+          %span= "[#{task.status.titleize}]"
         .card-body
           %h4.card-title= truncate(task.title, length: 70)
-          %p.card-text.padding-bottom-small= task.description
+          %p.card-text.padding-bottom-small= truncate(task.description, length: 200)
           .margin-bottom
-            = link_to 'Visit',
+            = link_to 'View',
               team_project_path(task.project.team, task.project),
               class: 'paper-btn'
 

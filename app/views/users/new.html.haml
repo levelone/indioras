@@ -1,27 +1,26 @@
-%h3= "{Sign Up}"
+.col.md-12.text-center
+  %h3= "{Sign Up}"
 
-.row
-  = form_for(:user, url: signup_path(@user), method: :post) do |f|
-    - if @user.errors.any?
-      .alert.alert-danger
-        %ul
-          - @user.errors.full_messages.uniq.each do |msg|
-            %li= msg
+= form_for(:user, url: signup_path(@user), method: :post) do |f|
+  - if @user.errors.any?
+    .alert.alert-danger
+      %ul
+        - @user.errors.full_messages.uniq.each do |msg|
+          %li= msg
 
-    .form-group
-      = f.label :username
-      = f.text_field :username
-    .form-group
-      = f.label :email
-      = f.text_field :email
-    .form-group
-      = f.label :password
-      = f.password_field :password
-    .form-group
-      = f.label :password_confirmation
-      = f.password_field :password_confirmation
+  .form-group
+    = f.label :username
+    = f.text_field :username
+  .form-group
+    = f.label :email
+    = f.text_field :email
+  .form-group
+    = f.label :password
+    = f.password_field :password
+  .form-group
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation
 
-    .row.flex-left
-      = link_to '<', root_path, class: 'paper-btn'
-      .margin-left
-        = f.submit 'Submit', class: 'paper-btn'
+  .row.flex-left.margin-top-large
+    = link_to '<', root_path, class: 'col margin-right paper-btn text-center'
+    = f.submit 'Submit', class: 'col paper-btn'
