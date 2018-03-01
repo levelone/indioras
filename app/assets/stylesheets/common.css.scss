@@ -1,8 +1,4 @@
-a {
-  background-image: none !important;
-  color: #41403E;
-}
-
+a { background-image: none !important; color: #41403E; }
 table a:hover { text-decoration: underline; }
 form { min-width: 300px; }
 .paper { min-width: 350px; }
@@ -11,3 +7,4 @@ form { min-width: 300px; }
 .hover-underline:hover { text-decoration: underline; }
 .no-margin { margin: 0 !important; }
 .no-padding { padding: 0 !important; }
+.task-status { height: 30px; }

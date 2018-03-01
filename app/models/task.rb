@@ -21,6 +21,8 @@ class Task < ActiveRecord::Base
   validates :title, presence: true, length: 3..120
   validates :duration, presence: true, numericality: { greater_than: 0 }
   validates :status, inclusion: { in: STATUS.values }
+  validates :start_date, presence: true
+  validates :end_date, presence: true
 
   scope :open, -> { where(status: STATUS[:open]) }
   scope :closed, -> { where(status: STATUS[:closed]) }

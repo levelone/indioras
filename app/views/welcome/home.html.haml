@@ -7,11 +7,8 @@
 
   .row.child-borders
     - current_user.teams.each_with_index do |team, index|
-      - if index == 0
-        - margin = ''
-      - else
-        - margin = 'margin-left'
-      = link_to team_path(team), class: "background-warning border-warning hover-underline padding-large #{margin}" do
+      = link_to team_path(team),
+        class: "background-warning border-warning col hover-underline margin-bottom margin-right text-center padding-large" do
         %h3.no-margin= team.name
 
   .row.flex-middle

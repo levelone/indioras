@@ -27,8 +27,9 @@
             - if current_user.is_team_owner?(@team) || |
                 current_user.is_team_collaborator?(@team) && |
                 current_user.is_project_owner?(project) |
-              = link_to 'O', edit_team_project_path(@team, project)
-              = link_to '| X',
+              = link_to 'Edit', edit_team_project_path(@team, project)
+              = ' | '
+              = link_to 'Delete',
                   team_project_path(@team, project),
                   method: :delete,
                   "data-confirm" => "Are you sure?",
