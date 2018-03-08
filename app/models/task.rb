@@ -15,7 +15,11 @@ class Task < ActiveRecord::Base
     minutes: 'minutes',
   }.freeze
 
-  before_create :set_default_status
+  DURATION_TYPE = {
+    day: (24*60*60),
+    hour: (60*60),
+    minute: 60
+  }.freeze
 
   validates :owner, presence: true
   validates :title, presence: true, length: 3..120
@@ -37,8 +41,28 @@ class Task < ActiveRecord::Base
     )
   }
 
-  def set_default_status
-    status ||= STATUS[:open]
+  def get_duration_value
+    return (duration / DURATION_TYPE[:day]) if divisible_per_day?
+    return (duration / DURATION_TYPE[:hour]) if divisible_per_hour?
+    duration / DURATION_TYPE[:minute]
+  end
+
+  def get_duration_type
+    return 'days' if divisible_per_day?
+    return 'hours' if divisible_per_hour?
+    'minutes'
+  end
+
+  def divisible_per_day?
+    (duration % DURATION_TYPE[:day]) == 0
+  end
+
+  def divisible_per_hour?
+    (duration % DURATION_TYPE[:hour]) == 0
+  end
+
+  def divisible_per_minute?
+    (duration % DURATION_TYPE[:minute]) == 0
   end
 
   class << self

@@ -34,7 +34,7 @@
     = hidden_field_tag :team_id, params[:team_id]
     = hidden_field_tag :project_id, params[:project_id]
     = f.hidden_field :status, value: (@task.status || Task::STATUS[:open])
-    = f.hidden_field :duration, value: 0, class: 'js-task-duration'
+    = f.hidden_field :duration, value: params[:duration_value], class: 'js-task-duration'
 
     - if @task.errors.any?
       .alert.alert-danger
@@ -52,12 +52,12 @@
       .form-group.no-margin
         = f.label :duration, 'Estimated Time:'
         = number_field_tag :duration_value,
-            0,
+            @task.get_duration_value,
             class: 'js-task-duration-value',
             onchange: 'setTimeInSeconds()'
       .form-group.margin-top-large.margin-left
         = select_tag :duration_type,
-            options_for_select(Task::TIME_FORMAT.values),
+            options_for_select(Task::TIME_FORMAT.values, @task.get_duration_type),
             class: 'js-task-duration-type',
             onchange: 'setTimeInSeconds()'
     .form-group

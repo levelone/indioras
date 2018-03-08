@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180220065928) do
+ActiveRecord::Schema.define(version: 20180308145652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,8 +36,8 @@ ActiveRecord::Schema.define(version: 20180220065928) do
     t.integer  "assignee_id"
     t.string   "title"
     t.string   "description"
-    t.string   "status",      null: false
-    t.integer  "duration"
+    t.string   "status",      default: "open", null: false
+    t.integer  "duration",    default: 0
     t.date     "start_date"
     t.date     "end_date"
     t.datetime "created_at"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20180220065928) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "team_type"
   end
 
   create_table "teams_users", id: false, force: :cascade do |t|
